@@ -9,6 +9,7 @@ const { validateSignupData, validateLoginData } = require('../util/validators');
 
 //========================  Login  ========================//
 exports.login = (req, res) => {
+    // console.log('body ', req.body)
     const user = {
         email: req.body.email,
         password: req.body.password,
@@ -35,6 +36,7 @@ exports.login = (req, res) => {
 
 //========================  Signup  ========================//
 exports.signup = (req, res) => {
+    console.log('body ', req.body)
     const newUser = {
         email: req.body.email,
         password: req.body.password,
@@ -62,7 +64,6 @@ exports.signup = (req, res) => {
             return data.user.getIdToken();
         })
         .then (token => {
-            console.log('token ', token)
             idToken = token;
             const userCredentials = {
                 email: newUser.email,
@@ -74,8 +75,12 @@ exports.signup = (req, res) => {
             };
             return db.collection('users').add(userCredentials);
         })
-        .then(data => {
-            return res.status(201).json({ idToken })
+        .then(docRef => {
+            return db.doc(`/users/${docRef.id}`).update({userId: docRef.id})
+            
+        })
+        .then(() => {
+            return res.status(201).json({ token: idToken })
         })
         .catch(err => {
             console.error(err);
