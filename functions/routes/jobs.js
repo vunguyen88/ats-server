@@ -6,7 +6,7 @@ const { htmlToText } = require('html-to-text');
 exports.addNewJob = (req, res) => {
     const newJob = {
         jobTitle: req.body.jobTitle,
-        numberOfPositions: req.body.numberOfPositions,
+        numberOfPositions: parseInt(req.body.numberOfPositions),
         employmentType: req.body.employmentType,
         createdOn: new Date().toISOString(),
         clientName: req.body.clientName,
@@ -54,9 +54,9 @@ exports.getJobListings = (req, res) => {
                     targetDate: docRef.data().targetDate,
                     jobStatus: docRef.data().jobStatus,
                     clientName: docRef.data().clientName,
-                    //numberOfPositions: docRef.data().numberOfPositions,
+                    numberOfPositions: docRef.data().numberOfPositions,
                     //numberOfHired: docRef.data().numberOfHired,
-                    //appliedCandidates: docRef.data().appliedCandidates,
+                    appliedCandidates: docRef.data().appliedCandidates,
                     //interviewedCandidates: docRef.data().interviewedCandidates,
                     //submittedCandidates: docRef.data().submittedCandidates,
                     city: docRef.data().city,

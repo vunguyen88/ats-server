@@ -3,8 +3,20 @@ const cors = require('cors')
 const app = require('express')();
 const FBAuth = require('./util/fbAuth');
 
-const { getAllUsers, createNewUser, signup, login } = require('./routes/users');
-const { candidateFirstApply, getAllResume, getResumeFile, deleteResume } = require('./routes/candidates');
+const { 
+    getAllUsers, 
+    createNewUser, 
+    signup, 
+    login 
+} = require('./routes/users');
+
+const { 
+    candidateFirstApply, 
+    getAllResume, 
+    getResumeFile, 
+    deleteResume, 
+    getAllCandidates 
+} = require('./routes/candidates');
 
 const {
     addNewJob,
@@ -38,10 +50,11 @@ app.post('/login', login);
 
 
 //========================  candidates routes  ========================//
-app.post('/apply', candidateFirstApply);
+app.post('/jobs/:jobId/apply', candidateFirstApply);
 app.get('/getallresumes', getAllResume);
 app.get('/getresumefile', getResumeFile);
 app.delete('/deleteresume', deleteResume);
+app.get('/candidates', getAllCandidates);
 
 
 //===========================  job routes  ============================//
