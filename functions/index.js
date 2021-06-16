@@ -15,7 +15,8 @@ const {
     getAllResume, 
     getResumeFile, 
     deleteResume, 
-    getAllCandidates 
+    getAllCandidates,
+    getCandidateWithId, 
 } = require('./routes/candidates');
 
 const {
@@ -55,6 +56,7 @@ app.get('/getallresumes', getAllResume);
 app.get('/getresumefile', getResumeFile);
 app.delete('/deleteresume', deleteResume);
 app.get('/candidates', getAllCandidates);
+app.get('/candidates/:id', getCandidateWithId);
 
 
 //===========================  job routes  ============================//

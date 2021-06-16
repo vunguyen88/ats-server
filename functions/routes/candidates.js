@@ -163,10 +163,24 @@ exports.getAllCandidates = (req, res) => {
             let candidateList = []
             querySnapshot.forEach(candidate => {
                 candidateList.push({
-                    ...candidate.data(), ...candidate.id
+                    ...candidate.data(), candidateId: candidate.id  
                 })
             })
             res.json(candidateList)
+        })
+        .catch(err => {
+            console.error(err)
+            res.json({ error: err })
+        })
+}
+
+//========================  Get Candidate with Id  =========================// 
+exports.getCandidateWithId = (req, res) => {
+    console.log('params ', req.params.id)
+    db.doc(`/candidates/${req.params.id}`).get()
+        .then(docSnapshot => {
+            console.log({ ...docSnapshot.data() })
+            res.json({ ...docSnapshot.data() })
         })
         .catch(err => {
             console.error(err)
