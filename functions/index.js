@@ -22,6 +22,7 @@ const {
 const {
     addNewJob,
     getJobListings,
+    getJobWithId,
 } = require('./routes/jobs');
 
 app.use(cors({
@@ -62,6 +63,7 @@ app.get('/candidates/:id', getCandidateWithId);
 //===========================  job routes  ============================//
 app.post('/newjob', addNewJob);
 app.get('/jobs', getJobListings);
+app.get('/jobs/:id', getJobWithId);
 
 // https://baseurl.com/api/
 

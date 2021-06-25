@@ -77,3 +77,17 @@ exports.getJobListings = (req, res) => {
             return res.json({ error: err })
         })
 }
+
+//========================  Get Job with Id  =========================// 
+exports.getJobWithId = (req, res) => {
+    console.log('params ', req.params.id)
+    db.doc(`/jobs/${req.params.id}`).get()
+        .then(docSnapshot => {
+            console.log({ ...docSnapshot.data() })
+            res.json({ ...docSnapshot.data() })
+        })
+        .catch(err => {
+            console.error(err)
+            res.json({ error: err })
+        })
+}
