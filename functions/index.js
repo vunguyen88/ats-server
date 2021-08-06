@@ -5,9 +5,16 @@ const FBAuth = require('./util/fbAuth');
 
 const { 
     getAllUsers, 
+    getUserWithId,
     createNewUser, 
     signup, 
-    login 
+    login ,
+    getUserProfile,
+    updateUserProfile,
+    updateUserProfilePicture,
+    sendMessageToUser,
+    getUserMessages,
+    requestTimeoff,
 } = require('./routes/users');
 
 const { 
@@ -22,7 +29,9 @@ const {
 const {
     addNewJob,
     getJobListings,
+    getAllJobs,
     getJobWithId,
+    updateCompanyLogo,
 } = require('./routes/jobs');
 
 app.use(cors({
@@ -38,7 +47,7 @@ app.use(cors({
 
 
 // Get all user route
-app.get('/users', getAllUsers);
+app.get('/users', FBAuth, getAllUsers);
 
 
 
@@ -47,23 +56,30 @@ app.get('/users', getAllUsers);
 
 
 //===========================  user routes  ==========================//
-app.post('/signup', signup)
+app.post('/signup', signup);
 app.post('/login', login);
-
+app.get('/users/:id', FBAuth, getUserWithId);
+app.get('/profile', FBAuth, getUserProfile);
+app.put('/profile/update', updateUserProfile);
+app.put('/profile/picture/update', updateUserProfilePicture);
+app.post('/users/:id/messages', FBAuth, sendMessageToUser);
+app.get('/users/currentuser/messages', FBAuth, getUserMessages);
+app.post('/users/:id/timeoff/reqest', FBAuth, requestTimeoff);
 
 //========================  candidates routes  ========================//
 app.post('/jobs/:jobId/apply', candidateFirstApply);
-app.get('/getallresumes', getAllResume);
-app.get('/getresumefile', getResumeFile);
-app.delete('/deleteresume', deleteResume);
-app.get('/candidates', getAllCandidates);
-app.get('/candidates/:id', getCandidateWithId);
-
+app.get('/getallresumes', FBAuth, getAllResume);
+app.get('/getresumefile', FBAuth, getResumeFile);
+app.delete('/deleteresume', FBAuth, deleteResume);
+app.get('/candidates', FBAuth, getAllCandidates);
+app.get('/candidates/:id', FBAuth, getCandidateWithId);
 
 //===========================  job routes  ============================//
-app.post('/newjob', addNewJob);
+app.post('/newjob', FBAuth, addNewJob);
 app.get('/jobs', getJobListings);
-app.get('/jobs/:id', getJobWithId);
+app.get('/alljobs', FBAuth, getAllJobs);
+app.get('/jobs/:id', FBAuth, getJobWithId);
+app.put('/jobs/:id/logo', FBAuth, updateCompanyLogo);
 
 // https://baseurl.com/api/
 

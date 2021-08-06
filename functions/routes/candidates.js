@@ -122,8 +122,8 @@ exports.candidateFirstApply = (req, res) => {
                 //return db.collection('candidates').add(candidateInfo)
                 return admin.storage().bucket('applicant-tracking-syste-74466.appspot.com').upload(fileToBeUpload.filepath, {
                     gzip: true,
-                    destination: `resume/${candidateInfo.firstName + ' ' + candidateInfo.lastName}`,
-                    redefineAcl: 'publicRead',
+                    destination: `resume/${candidateInfo.firstName + ' ' + candidateInfo.lastName + '-' + candidateInfo.userUID}`,
+                    public: true,
                     metadata: {
                         cachControl: 'public, max-age=31536000',
                     },
@@ -138,7 +138,7 @@ exports.candidateFirstApply = (req, res) => {
                 const metadata = result[0];
                 // Get file Url after upload success
                 candidateInfo.resumeUrl = metadata.mediaLink
-                candidateInfo.appliedJobs = [{ jobTitle: candidateInfo.jobTitle, jobId: req.params.jobId, clientName: candidateInfo.clientName, appliedOn, status: 'pending' }]
+                candidateInfo.appliedJobs = [{ jobTitle: candidateInfo.jobTitle, jobId: req.params.jobId, clientName: candidateInfo.clientName, appliedOn, status: 'pending', city: candidateInfo.city }]
                 // Check if candidate already have an email signup
                 return db.collection('candidates').add(candidateInfo)
             })
